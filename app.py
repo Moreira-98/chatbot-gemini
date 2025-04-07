@@ -9,15 +9,9 @@ with st.sidebar:
     st.title("Configurações")
     st.markdown("---")
 
-    # Configurações do modelo
-    st.markdown("### Configurações do Modelo")
-    model_name = st.selectbox("Selecione o modelo", ["gemini-2.0-flash", "gemini-pro"])
-
     # Configuração da API KEY
     st.markdown("### Insira a sua API KEY")
-    API_KEY = st.text_input(
-        "API KEY", help="Cole aqui sua API KEY do Gemini"
-    )
+    API_KEY = st.text_input("API KEY", help="Cole aqui sua API KEY do Gemini")
 
     if not API_KEY:
         st.error("Por favor, insira a sua API KEY")
@@ -29,6 +23,14 @@ with st.sidebar:
     except Exception as e:
         st.error(f"Erro ao configurar a API: {str(e)}")
         st.stop()
+
+    # Botão para limpar o histórico
+    st.markdown("---")
+    if st.button("Limpar Histórico"):
+        st.session_state.messages = [
+            {"role": "Gemini", "content": "Olá! como posso ajudar você hoje?"}
+        ]
+        st.rerun()
 
 # Inicializar o histórico de mensagens no session_state
 if "messages" not in st.session_state:
@@ -53,7 +55,7 @@ if prompt := st.chat_input("Digite sua pergunta..."):
     with st.chat_message("assistant"):
         try:
             with st.spinner("Gerando resposta..."):
-                model = gemini.GenerativeModel(model_name)
+                model = gemini.GenerativeModel("gemini-2.0-flash")
 
                 response = model.generate_content(prompt)
 
