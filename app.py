@@ -9,14 +9,6 @@ with st.sidebar:
     st.title("Configurações")
     st.markdown("---")
 
-    # Link para documentação
-    st.markdown("### Como obter a API KEY")
-    st.markdown(
-        """
-    Para gerar sua API KEY, acesse a [Documentação oficial do Gemini](https://ai.google.dev/tutorials/setup).
-    """
-    )
-
     # Configurações do modelo
     st.markdown("### Configurações do Modelo")
     model_name = st.selectbox("Selecione o modelo", ["gemini-2.0-flash", "gemini-pro"])
